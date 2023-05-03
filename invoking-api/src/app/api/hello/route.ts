@@ -1,0 +1,66 @@
+import {
+  NextRequest,
+  NextResponse,
+} from "next/server";
+
+export async function GET(req: NextRequest) {
+  try {
+    const url = req.nextUrl;
+    if (url.searchParams.has("name")) {
+      const name = url.searchParams.get("name");
+      return NextResponse.json({
+        message: `Hello, from ${name}`,
+      });
+    }
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+}
+
+export async function POST(request: NextRequest) {
+  const req = await request.json();
+  if (req.name) {
+    return NextResponse.json({
+      To: req.name,
+      Message: "All well here",
+      RequestType: "POST",
+    });
+  } else {
+    return new NextResponse(
+      "Please include your name in the POST request"
+    );
+  }
+}
+
+export async function PUT(request: NextRequest) {
+  const req = await request.json();
+  if (req.name) {
+    return NextResponse.json({
+      To: "Zia",
+      Message: "This is a updated greeting",
+      RequestType: "PUT",
+    });
+  } else {
+    return new NextResponse(
+      "Please include your name in the PUT request"
+    );
+  }
+}
+
+export async function DELETE(
+  request: NextRequest
+) {
+  const req = await request.json();
+  if (req.name) {
+    return NextResponse.json({
+      To: "Zia",
+      Message: "I have deleted the greetings",
+      RequestType: "DELETE",
+    });
+  } else {
+    return new NextResponse(
+      "Please include your name in the DELETE request"
+    );
+  }
+}
